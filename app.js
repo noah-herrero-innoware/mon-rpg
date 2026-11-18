@@ -38,3 +38,10 @@ class Monstre extends Personnage {
         return "👹 " + this.nom + " riposte : -" + degats + " PV !";
     }
 }
+
+async function demarrer() {
+    const monstre = await Monstre.depuisApi("gengar");
+    new Combat(new Heros("Héros"), monstre, journal);
+}
+
+demarrer();
