@@ -130,6 +130,7 @@ class Combat {
         // Flèche () => : "this" reste le combat quand on clique
         this.boutonAttaque.addEventListener("click", () => this.attaquer());
         this.boutonSoin.addEventListener("click", () => this.soigner());
+        this.journal.ajouter("🎉 Victoire ! " + this.monstre.nom + " est vaincu !");
 
         this.afficherVie();
     }
@@ -200,6 +201,12 @@ async function chargerJson(url) {
 }
 
 /* ===== 2. LE DÉMARRAGE ===== */
+async function demarrer() {
+    const monstre = await Monstre.depuisApi("gengar");
+    new Combat(new Heros("Héros"), monstre, journal);
+}
+
+demarrer();
 
 const journal = new Journal(
     document.getElementById("journal"),
@@ -208,10 +215,3 @@ const journal = new Journal(
 );
 
 new Combat(new Heros("Héros"), new Monstre("Monstre"), journal);
-
-async function demarrer() {
-    const monstre = await Monstre.depuisApi("gengar");
-    new Combat(new Heros("Héros"), monstre, journal);
-}
-
-demarrer();
