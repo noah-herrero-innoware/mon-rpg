@@ -124,7 +124,9 @@ class Combat {
         this.barreMonstre = document.getElementById("barre-monstre");
         this.boutonAttaque = document.getElementById("btn-attaque");
         this.boutonSoin = document.getElementById("btn-soin");
-
+        this.nomMonstre = document.getElementById("monstre");
+        this.spriteMonstre = document.getElementById("sprite-monstre");
+    
         // Flèche () => : "this" reste le combat quand on clique
         this.boutonAttaque.addEventListener("click", () => this.attaquer());
         this.boutonSoin.addEventListener("click", () => this.soigner());
@@ -180,6 +182,12 @@ class Combat {
         this.verifierFin();
         this.afficherVie();
     }
+
+    afficherMonstre() {
+    this.nomMonstre.textContent = this.monstre.nom;
+    this.spriteMonstre.src = this.monstre.sprite;
+    this.spriteMonstre.alt = this.monstre.nom;
+}
 }
 
 // Charge une adresse et renvoie son contenu JSON
@@ -201,3 +209,9 @@ const journal = new Journal(
 
 new Combat(new Heros("Héros"), new Monstre("Monstre"), journal);
 
+async function demarrer() {
+    const monstre = await Monstre.depuisApi("gengar");
+    new Combat(new Heros("Héros"), monstre, journal);
+}
+
+demarrer();
